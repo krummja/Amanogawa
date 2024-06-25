@@ -1,0 +1,31 @@
+[tool.poetry]
+name = "amanogawa"
+version = "0.1.0"
+description = ""
+authors = ["Jonathan Crum <jcrum@theobogroup.com>"]
+readme = "README.md"
+
+[tool.poetry.dependencies]
+python = "^3.11"
+dango = "^0.0.1"
+devtools = "^0.12.2"
+nltk = "^3.8.1"
+fastapi = "^0.111.0"
+polars = "^0.20.31"
+lxml = "^5.2.2"
+
+[build-system]
+requires = ["poetry-core"]
+build-backend = "poetry.core.masonry.api"
+
+[tool.ruff]
+line-length = 90
+
+[tool.ruff.lint]
+select = ["E", "F", "W"]
+ignore = [
+    "F401",   # module imported but unused
+    "F403",   # 'from module import *' unused; unable to detect undefined names
+    "F405",   # name may be undefined, or defined from star imports
+    "F841",   # local variable 'remote' is assigned to but never used
+]
