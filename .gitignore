@@ -164,3 +164,8 @@ cython_debug/
 files/
 data/
 .idea/
+
+
+# Added by cargo
+
+/target

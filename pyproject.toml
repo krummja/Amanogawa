@@ -7,12 +7,19 @@ readme = "README.md"
 
 [tool.poetry.dependencies]
 python = "^3.11"
-dango = "^0.0.1"
 devtools = "^0.12.2"
 nltk = "^3.8.1"
 fastapi = "^0.111.0"
 polars = "^0.20.31"
 lxml = "^5.2.2"
+sqlalchemy = "^2.0.31"
+python-dotenv = "^1.0.1"
+psycopg2 = "^2.9.9"
+google = "^3.0.0"
+requests = "^2.32.3"
+sudachipy = ">=0.6.8"
+sudachidict-core = "^20240409"
+pygtrie = "^2.5.0"
 
 [build-system]
 requires = ["poetry-core"]
