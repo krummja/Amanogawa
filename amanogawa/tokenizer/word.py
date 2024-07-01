@@ -68,7 +68,7 @@ CATEGORY_MAPPING = Trie([
     (["名詞", "普通名詞", "助数詞可能"], Category.COUNTER),
 
     # けいようし
-    ([""], Category.ADJECTIVE),
+    (["形容詞"], Category.ADJECTIVE),
 
     # けいじょうし
     (["形状詞"], Category.ADJECTIVAL_NOUN),
@@ -102,10 +102,34 @@ CATEGORY_MAPPING = Trie([
 ])
 
 
+class MorphemeInfo:
+
+    def __init__(self, lexeme: str, morpheme: Morpheme) -> None:
+        self._lexeme = lexeme
+        self._morpheme = morpheme
+
+        self.dictionary_form = self._morpheme.dictionary_form()
+        self.normalized_form = self._morpheme.normalized_form()
+        self.surface_form = self._morpheme.surface()
+        self.reading_form = self._morpheme.reading_form()
+        self.pos_info = self._morpheme.part_of_speech()
+        self.start_idx = self._morpheme.begin()
+        self.end_idx = self._morpheme.end()
+
+    def pretty(self) -> dict[str, str]:
+        return {
+            "dictionary": self.dictionary_form,
+            "normalized": self.normalized_form,
+            "surface": self.surface_form,
+            "reading": self.reading_form,
+        }
+
+
 class Word:
 
     def __init__(self, morphemes: list[Morpheme], form_reading: str  = "") -> None:
         self._morphemes = morphemes
+        self._morpheme_info = [MorphemeInfo(form_reading, mm) for mm in morphemes]
         self._form_reading = form_reading
 
     @property
@@ -130,6 +154,15 @@ class Word:
 
     @property
     def category(self) -> Category:
-        """The lexical category of the word."""
-        key = self._morphemes[0].part_of_speech()[:4]
+        """
+        The lexical category of the word.
+
+        We use a trie structure to map the morpheme features from the UniDic tags instead
+        of a simple dict since there are feature tuples that can be mapped to more
+        specific tags based on the longest matching prefix.
+        """
+        key = self._morphemes[0].part_of_speech()[:6]
         return CATEGORY_MAPPING.longest_prefix(key).value or Category.UNKNOWN
+
+    def __iter__(self) -> Iterator[Morpheme]:
+        yield from self._morphemes

@@ -4,45 +4,32 @@ if TYPE_CHECKING:
     from requests import Response
 
 import devtools as dev
-import requests
+from pathlib import Path
+from google.cloud import translate_v2
+import google.auth
 
-from amanogawa.config import G_API_KEY
-from amanogawa.config import G_PROJECT_ID
-
-
-HEADERS = {
-    "Authorization": f"Bearer {G_API_KEY}",
-    "x-goog-user-project": G_PROJECT_ID,
-    "Content-Type": "application/json; charset=utf-8"
-}
-
-def get_language_id() -> Response:
-    response = requests.get(
-        url="https://translation.googleapis.com/language/translate/v2/languages",
-        headers=HEADERS,
-    )
-    return response
+from amanogawa.config import ROOTDIR
 
 
-def translate(text: str) -> Response:
-    response = requests.post(
-        url="https://translation.googleapis.com/language/translate/v2",
-        headers=HEADERS,
-        json={
-            "q": text,
-            "source": "ja",
-            "target": "en",
-            "format": "text",
-        },
+class TranslationData(TypedDict):
+    translatedText: str
+    detectedSourceLanguage: str
+    input: str
+
+
+def translate(text: str) -> TranslationData:
+    credentials_file = Path(ROOTDIR, ".gcloud.json")
+    credentials, _ = google.auth.load_credentials_from_file(credentials_file)
+
+    translate_client = translate_v2.Client(
+        credentials=credentials,
     )
 
-    return response
+    result = translate_client.translate(text, target_language="en")
+    return result
 
 
 if __name__ == '__main__':
-    response = translate("-た")
-
-    if response.status_code == 200:
-        dev.debug(response.json())
-    else:
-        dev.debug(vars(response))
+    text = "私の名前はジョナサンです"
+    response = translate(text)
+    dev.debug(response)

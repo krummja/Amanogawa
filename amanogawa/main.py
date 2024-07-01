@@ -1,94 +1,133 @@
 from __future__ import annotations
 from typing import *
 
-import nltk.parse.generate
-if TYPE_CHECKING:
-    pass
-
-# import dango
+from enum import StrEnum
 import nltk
 import rich
 import devtools as dev
-from dataclasses import dataclass, KW_ONLY
-# from dango.word import PartOfSpeech
-from enum import StrEnum
-from nltk import grammar, parse
-from nltk import FeatStruct, FeatStructReader, Variable
-from nltk.grammar import FeatStructNonterminal, Production
+import sudachipy as su
 
-from amanogawa.parser import Parser
+from amanogawa.categories import CATEGORIES_EN_JP
+from amanogawa.categories import CATEGORIES_JP_EN
+from amanogawa.categories import CONJUGATION_FORMS_EN_JP
+from amanogawa.categories import CONJUGATION_FORMS_JP_EN
+from amanogawa.categories import CONJUGATION_TYPES_EN_JP
+from amanogawa.categories import CONJUGATION_TYPES_JP_EN
 
-
-# categories = {
-#     "代名詞": PartOfSpeech.PRONOUN,
-#     "名詞": PartOfSpeech.NOUN,
-#     "助詞": PartOfSpeech.PARTICLE,
-#     "動詞": PartOfSpeech.VERB,
-#     "助動詞": PartOfSpeech.AUXILIARY_VERB,
-#     "接尾辞": PartOfSpeech.SUFFIX,
-#     "副詞": PartOfSpeech.ADVERB,
-#     "形容詞": PartOfSpeech.ADJECTIVE,
-# }
+from amanogawa.translation import translate
+from amanogawa.translation import TranslationData
+from amanogawa.tts import text_to_speech
+from amanogawa.analyzer.util import katakana_to_hiragana
+from amanogawa.morphology import MorphemeInfo
 
 
-# @dataclass(kw_only=True)
-# class Morpheme:
-#     category: PartOfSpeech
-#     surface_form: str
-#     dictionary_form: str
-#     normalized_form: str
+class Phrase:
+
+    def __init__(
+        self,
+        original_text: str,
+        morphemes: su.MorphemeList,
+        translation: str,
+    ) -> None:
+        self.original_text = original_text
+        self.morphemes = morphemes
+        self.translation = translation
+
+    @property
+    def morphology(self) -> list[MorphemeInfo]:
+        morphemes = []
+        for morpheme in self.morphemes:
+            raw_pos = morpheme.part_of_speech()
+            info = MorphemeInfo(
+                dictionary_form=morpheme.dictionary_form(),
+                surface_form=morpheme.surface(),
+                reading_form=katakana_to_hiragana(morpheme.reading_form()),
+                category_0=CATEGORIES_JP_EN[raw_pos[0]],
+                category_1=CATEGORIES_JP_EN[raw_pos[1]],
+                category_2=CATEGORIES_JP_EN[raw_pos[2]],
+                category_3=CATEGORIES_JP_EN[raw_pos[3]],
+                conjugation_type=CONJUGATION_TYPES_JP_EN[raw_pos[4]],
+                conjugation_form=CONJUGATION_FORMS_JP_EN[raw_pos[5]],
+            )
+
+            morphemes.append(info)
+        return morphemes
+
+    def __iter__(self) -> Iterator[MorphemeInfo]:
+        yield from self.morphology
 
 
-# @dataclass(kw_only=True)
-# class Lexeme:
-#     category: PartOfSpeech
-#     surface_form: str
-#     surface_reading: str
-#     dictionary_form: str
-#     dictionary_reading: str
-#     morphology: list[Morpheme]
+class Word:
 
+    def __init__(self, original_text: str, morphemes: su.MorphemeList) -> None:
+        self.original_text = original_text
+        self.morphemes = morphemes
 
-# def dango_to_featstruct(item: Lexeme) -> FeatStruct:
-#     return FeatStruct(
-#         category=item.category,
-#         spell_out=item.surface_form,
-#     )
+    @property
+    def morphology(self) -> list[MorphemeInfo]:
+        morphemes = []
+        for morpheme in self.morphemes:
+            raw_pos = morpheme.part_of_speech()
+            dev.debug(morpheme.word_id())
+            info = MorphemeInfo(
+                dictionary_form=morpheme.dictionary_form(),
+                surface_form=morpheme.surface(),
+                reading_form=katakana_to_hiragana(morpheme.reading_form()),
+                category_0=CATEGORIES_JP_EN[raw_pos[0]],
+                category_1=CATEGORIES_JP_EN[raw_pos[1]],
+                category_2=CATEGORIES_JP_EN[raw_pos[2]],
+                category_3=CATEGORIES_JP_EN[raw_pos[3]],
+                conjugation_type=CONJUGATION_TYPES_JP_EN[raw_pos[4]],
+                conjugation_form=CONJUGATION_FORMS_JP_EN[raw_pos[5]],
+            )
 
+            morphemes.append(info)
+        return morphemes
 
-# def map_category(cat: list[str]) -> PartOfSpeech:
-#     return categories[cat[0]]
+    @property
+    def translation(self) -> TranslationData:
+        return translate(self.original_text)
+
+    @property
+    def forms(self) -> list[tuple[str, str]]:
+        forms = []
+        for morpheme in self.morphology:
+            forms.append([morpheme.dictionary_form, morpheme.conjugation_form])
+        return forms
+
+    def __iter__(self) -> Iterator[MorphemeInfo]:
+        yield from self.morphology
+
+    def __str__(self) -> str:
+        morphemes = []
+        for morpheme in self.morphemes:
+            morphemes.append(morpheme.surface())
+        morpheme_str = "・".join(morphemes)
+        return f"{self.original_text} [{morpheme_str}]"
 
 
 def main() -> None:
-    pass
-    # words = dango.tokenize("私はリンゴを食べました")
+    dictionary = su.Dictionary(dict="full")
+    tokenizer = dictionary.create()
 
-    # lexicon = []
+    text = "大人らしくするつもりだったのに、大騒ぎしてしまった"
+    text2 = "彼女がきれいなのに彼氏がいません"
+    result = tokenizer.tokenize(text)
+    word = Word(text, result)
 
-    # for word in words:
-    #     for morpheme in word.morphemes:
-    #         dev.debug(morpheme.part_of_speech())
+    for morpheme in word.morphology:
+        print(morpheme)
 
-    #     lexeme = Lexeme(
-    #         category=word.part_of_speech,
-    #         surface_form=word.surface,
-    #         surface_reading=word.surface_reading,
-    #         dictionary_form=word.dictionary_form,
-    #         dictionary_reading=word.dictionary_form_reading,
-    #         morphology=[
-    #             Morpheme(
-    #                 category=map_category(morph.part_of_speech()),
-    #                 surface_form=morph.surface(),
-    #                 dictionary_form=morph.dictionary_form(),
-    #                 normalized_form=morph.normalized_form(),
-    #             ) for morph in word.morphemes
-    #         ],
-    #     )
+    # translated = translate(text)
+    # translation = translated["translatedText"]
+    # phrase = Phrase(text, result, translation)
 
-    #     lexicon.append(lexeme)
+    # dev.debug(phrase.translation)
+    # dev.debug(phrase.morphology)
 
-    # dev.debug(lexicon)
+    # text_to_speech(text, "sentence")
+    # for i, morpheme in enumerate(phrase):
+    #     text_to_speech(str(morpheme.surface_form), f"morpheme_{str(i)}")
 
 
 if __name__ == '__main__':

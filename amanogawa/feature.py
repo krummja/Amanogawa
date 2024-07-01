@@ -8,13 +8,22 @@ from enum import StrEnum
 from nltk import grammar, parse
 from nltk import FeatStruct, FeatStructReader, Variable
 from nltk.grammar import FeatStructNonterminal, Production
-from dango.word import PartOfSpeech
 
 
-class Tense(StrEnum):
-    PAST = "PAST"
-    PRES = "PRES"
-    FUT = "FUT"
+# tok-e-        be solved
+# tok-          solve
+
+# tok-e-        melt (i)
+# tok-as-       melt (t)
+
+# tsunag-ar-    be connected
+# tsunag-e-     connect (t)
+# tsunag-       connect (t)
+
+# 出勤するときはいつもコンビニに寄っていく
+
+Past = FeatStruct(PAST="+")
+Nonpast = FeatStruct(PAST="-")
 
 
 def test():

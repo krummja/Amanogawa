@@ -10,19 +10,19 @@ from amanogawa.tokenizer.exceptions import StateNotFoundException
 
 class State(Protocol):
 
+    name: str
+
     def on_input(self, context: Any, morpheme: Morpheme) -> None:
         """Process the current input."""
-        ...
 
 
-MorphemeFeatures: TypeAlias = tuple[str, str, str, str]
-
+MorphemeFeatures: TypeAlias = tuple[str, ...]
 StateTransitionRule: TypeAlias = tuple[State | None, MorphemeFeatures, State]
 
 
-def get_morpheme_features(morpheme: Morpheme) -> MorphemeFeatures:
+def get_morpheme_features(morpheme: Morpheme, size: int = 4) -> MorphemeFeatures:
     category = morpheme.part_of_speech()
-    return category[0], category[1], category[2], category[3]
+    return tuple(category[:size])
 
 
 class StateMachine:
@@ -48,9 +48,8 @@ class StateMachine:
         for src, features, dst in transitions:
             self._transitions[(src, features)] = dst
 
-    def get_next_state(self, source_state: State, morpheme: Morpheme) -> State:
-        features = get_morpheme_features(morpheme)
-
+    def get_next_state(self, source_state: State, morpheme: Morpheme, size: int) -> State:
+        features = get_morpheme_features(morpheme, size)
         if (source_state, features) in self._transitions:
             return self._transitions[(source_state, features)]
         elif (None, features) in self._transitions:
@@ -61,8 +60,13 @@ class StateMachine:
         current_state = self._initial_state
 
         for morpheme in morphemes:
-            next_state = self.get_next_state(current_state, morpheme)
-            next_state.on_input(context, morpheme)
-            current_state = next_state
+            first_pass = self.get_next_state(current_state, morpheme, 4)
+            first_pass.on_input(context, morpheme)
+            current_state = first_pass
+
+            second_pass = self.get_next_state(current_state, morpheme, 6)
+            second_pass.on_input(context, morpheme)
+            dev.debug(first_pass.name)
+            dev.debug(second_pass.name)
 
         return context

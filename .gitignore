@@ -169,3 +169,6 @@ data/
 # Added by cargo
 
 /target
+
+
+.gcloud.json

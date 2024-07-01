@@ -1,0 +1,17 @@
+
+% start S
+
+DP -> D NP | D
+
+NP -> N
+
+VP -> DP V'
+V' -> V DP
+
+
+
+#####################
+# Lexical Productions
+#####################
+
+

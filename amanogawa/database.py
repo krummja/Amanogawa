@@ -3,7 +3,9 @@ from typing import *
 if TYPE_CHECKING:
     pass
 
+import pendulum as pdl
 import polars as pl
+import devtools as dev
 from enum import StrEnum
 from sqlalchemy import create_engine
 from sqlalchemy import Engine
@@ -73,8 +75,3 @@ def search_by_ent_seq(value: int) -> pl.DataFrame:
     dictionary = retrieve_dictionary()
     result = dictionary.select("*").filter(pl.col("ent_seq") == value)
     return result
-
-
-if __name__ == '__main__':
-    record = search_by_ent_seq(1000100)
-    print(record)

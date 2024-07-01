@@ -1,133 +1,75 @@
-## All Categories
+# Amanogawa
 
-| pos | count |
-| :--- | :--- |
-| noun \(common\) \(futsuumeishi\) | 162940 |
-| intransitive verb | 7140 |
-| transitive verb | 7137 |
-| nouns which may take the genitive case particle 'no' | 5659 |
-| noun or participle which takes the aux. verb suru | 4567 |
-| expressions \(phrases, clauses, etc.\) | 3872 |
-| adjectival nouns or quasi-adjectives \(keiyodoshi\) | 2578 |
-| adverb \(fukushi\) | 2484 |
-| adjective \(keiyoushi\) | 2048 |
-| Ichidan verb | 1883 |
-| Godan verb with 'ru' ending | 1332 |
-| noun or verb acting prenominally | 922 |
-| Godan verb with 'su' ending | 905 |
-| adverb taking the 'to' particle | 897 |
-| interjection \(kandoushi\) | 608 |
-| Godan verb with 'ku' ending | 529 |
-| Godan verb with 'u' ending | 472 |
-| noun, used as a suffix | 375 |
-| suffix | 290 |
-| pronoun | 252 |
-| suru verb - included | 252 |
-| Godan verb with 'mu' ending | 248 |
-| prefix | 215 |
-| counter | 208 |
-| conjunction | 206 |
-| Godan verb with 'tsu' ending | 177 |
-| pre-noun adjectival \(rentaishi\) | 159 |
-| adjective \(keiyoushi\) - yoi/ii class | 128 |
-| particle | 122 |
-| noun, used as a prefix | 95 |
-| suru verb - special class | 91 |
-| 'taru' adjective | 84 |
-| numeric | 83 |
-| Godan verb with 'gu' ending | 73 |
-| Godan verb with 'ru' ending \(irregular verb\) | 68 |
-| Godan verb with 'bu' ending | 64 |
-| auxiliary verb | 53 |
-| auxiliary | 36 |
-| Godan verb - Iku/Yuku special class | 36 |
-| Kuru verb - special class | 33 |
-| unclassified | 22 |
-| Ichidan verb - zuru verb \(alternative form of -jiru verbs\) | 20 |
-| su verb - precursor to the modern suru | 17 |
-| 'ku' adjective \(archaic\) | 16 |
-| archaic/formal form of na-adjective | 16 |
-| 'shiku' adjective \(archaic\) | 9 |
-| Yodan verb with 'ru' ending \(archaic\) | 7 |
-| Godan verb with 'u' ending \(special class\) | 7 |
-| Yodan verb with 'ku' ending \(archaic\) | 6 |
-| Nidan verb \(lower class\) with 'mu' ending \(archaic\) | 6 |
-| auxiliary adjective | 5 |
-| copula | 5 |
-| Nidan verb \(upper class\) with 'tsu' ending \(archaic\) | 3 |
-| irregular ru verb, plain form ends with -ri | 3 |
-| Ichidan verb - kureru special class | 3 |
-| Godan verb - -aru special class | 3 |
-| Nidan verb \(lower class\) with 'ru' ending \(archaic\) | 2 |
-| Nidan verb \(lower class\) with 'hu/fu' ending \(archaic\) | 2 |
-| Yodan verb with 'tsu' ending \(archaic\) | 1 |
-| Nidan verb \(lower class\) with 'su' ending \(archaic\) | 1 |
-| Yodan verb with 'hu/fu' ending \(archaic\) | 1 |
-| Nidan verb \(upper class\) with 'bu' ending \(archaic\) | 1 |
-| Yodan verb with 'mu' ending \(archaic\) | 1 |
-| Nidan verb \(upper class\) with 'ku' ending \(archaic\) | 1 |
-| irregular nu verb | 1 |
-| Nidan verb \(lower class\) with 'dzu' ending \(archaic\) | 1 |
-| Yodan verb with 'su' ending \(archaic\) | 1 |
-| Godan verb with 'nu' ending | 1 |
+## Acknowledgements
 
+`Amanogawa` is built on several existing projects:
 
-## Verbal Breakdown
+- dango
+- sudachi.rs
+- NLTK
+- [JMdict data from Monash University](http://ftp.edrdg.org/pub/Nihongo/00INDEX.html)
 
-| pos | count |
-| :--- | :--- |
-| intransitive verb | 7140 |
-| transitive verb | 7137 |
-| noun or participle which takes the aux. verb suru | 4567 |
-| Ichidan verb | 1883 |
-| Godan verb with 'ru' ending | 1332 |
-| noun or verb acting prenominally | 922 |
-| Godan verb with 'su' ending | 905 |
-| Godan verb with 'ku' ending | 529 |
-| Godan verb with 'u' ending | 472 |
-| suru verb - included | 252 |
-| Godan verb with 'mu' ending | 248 |
-| Godan verb with 'tsu' ending | 177 |
-| suru verb - special class | 91 |
-| Godan verb with 'gu' ending | 73 |
-| Godan verb with 'ru' ending \(irregular verb\) | 68 |
-| Godan verb with 'bu' ending | 64 |
-| auxiliary verb | 53 |
-| Godan verb - Iku/Yuku special class | 36 |
-| Kuru verb - special class | 33 |
-| Ichidan verb - zuru verb \(alternative form of -jiru verbs\) | 20 |
-| su verb - precursor to the modern suru | 17 |
-| Godan verb with 'u' ending \(special class\) | 7 |
-| Yodan verb with 'ru' ending \(archaic\) | 7 |
-| Yodan verb with 'ku' ending \(archaic\) | 6 |
-| Nidan verb \(lower class\) with 'mu' ending \(archaic\) | 6 |
-| Ichidan verb - kureru special class | 3 |
-| Godan verb - -aru special class | 3 |
-| irregular ru verb, plain form ends with -ri | 3 |
-| Nidan verb \(upper class\) with 'tsu' ending \(archaic\) | 3 |
-| Nidan verb \(lower class\) with 'hu/fu' ending \(archaic\) | 2 |
-| Nidan verb \(lower class\) with 'ru' ending \(archaic\) | 2 |
-| Nidan verb \(lower class\) with 'su' ending \(archaic\) | 1 |
-| Nidan verb \(lower class\) with 'dzu' ending \(archaic\) | 1 |
-| Yodan verb with 'hu/fu' ending \(archaic\) | 1 |
-| irregular nu verb | 1 |
-| Yodan verb with 'mu' ending \(archaic\) | 1 |
-| Godan verb with 'nu' ending | 1 |
-| Yodan verb with 'su' ending \(archaic\) | 1 |
-| Nidan verb \(upper class\) with 'ku' ending \(archaic\) | 1 |
-| Yodan verb with 'tsu' ending \(archaic\) | 1 |
-| Nidan verb \(upper class\) with 'bu' ending \(archaic\) | 1 |
+## UniDic English Tag Set
 
-## Nominal Breakdown
-
-| pos | count |
-| :--- | :--- |
-| noun \(common\) \(futsuumeishi\) | 162940 |
-| nouns which may take the genitive case particle 'no' | 5659 |
-| noun or participle which takes the aux. verb suru | 4567 |
-| adjectival nouns or quasi-adjectives \(keiyodoshi\) | 2578 |
-| noun or verb acting prenominally | 922 |
-| noun, used as a suffix | 375 |
-| pre-noun adjectival \(rentaishi\) | 159 |
-| noun, used as a prefix | 95 |
-
+| PoS(Ja)         |   PoS (En)   | PoS (En) - descriptions                  |
+| --------------- |:------------:| ---------------------------------------- |
+| 代名詞             |     Pron     | pronoun                                  |
+| 副詞              |      Adv     | adverb                                   |
+| 助動詞             |      Aux     | auxiliary_verb                           |
+| 助詞-係助詞          |    P.bind    | particle(binding)                        |
+| 助詞-副助詞          |     P.adv    | particle(adverbial)                      |
+| 助詞-接続助詞         |    P.conj    | particle(conjunctive)                    |
+| 助詞-格助詞          |    P.case    | particle(case)                           |
+| 助詞-準体助詞         |     P.nom    | particle(nominal)                        |
+| 助詞-終助詞          |     P.fin    | particle(phrase_final)                   |
+| 動詞-一般           |      V.g     | verb(general)                            |
+| 動詞-非自立可能        |     V.bnd    | verb(bound)                              |
+| 名詞-助動詞語幹        |     N.aux    | noun(auxiliary)                          |
+| 名詞-固有名詞-一般      |   N.prop.g   | noun(proper.general)                     |
+| 名詞-固有名詞-人名-一般   |  N.prop.n.g  | noun(proper.name.general)                |
+| 名詞-固有名詞-人名-名    |  N.prop.n.f  | noun(proper.name.firstname)              |
+| 名詞-固有名詞-人名-姓    |  N.prop.n.s  | noun(proper.name.surname)                |
+| 名詞-固有名詞-地名-一般   |  N.prop.p.g  | noun(proper.place.general)               |
+| 名詞-固有名詞-地名-国    |  N.prop.p.c  | noun(proper.place.country)               |
+| 名詞-数詞           |     N.num    | noun(numeral)                            |
+| 名詞-普通名詞-サ変可能    |    N.c.vs    | noun(common.verbal_suru)                 |
+| 名詞-普通名詞-サ変形状詞可能 |  N.c.vs.ana  | noun(common.verbal.adjectival)           |
+| 名詞-普通名詞-一般      |     N.c.g    | noun(common.general)                     |
+| 名詞-普通名詞-副詞可能    |    N.c.adv   | noun(common.adverbial)                   |
+| 名詞-普通名詞-助数詞可能   |   N.c.count  | noun(common.counter)                     |
+| 名詞-普通名詞-形状詞可能   |    N.c.ana   | noun(common.adjectival)                  |
+| 形容詞-一般          |     Ai.g     | adjective_i(general)                     |
+| 形容詞-非自立可能       |    Ai.bnd    | adjective_i(bound)                       |
+| 形状詞-タリ          |   Ana.tari   | adjectival_noun(tari)                    |
+| 形状詞-一般          |     Ana.g    | adjectival_noun(general)                 |
+| 形状詞-助動詞語幹       |    Ana.aux   | adjectival_noun(auxiliary)               |
+| 感動詞-フィラー        |  Interj.fill | interjection(filler)                     |
+| 感動詞-一般          |   Interj.g   | interjection(general)                    |
+| 接尾辞-動詞的         |    Suff.v    | suffix(verbal)                           |
+| 接尾辞-名詞的-サ変可能    |   Suff.n.vs  | suffix(nominal.verbal_suru)              |
+| 接尾辞-名詞的-一般      |   Suff.n.g   | suffix(nominal.general)                  |
+| 接尾辞-名詞的-副詞可能    |  Suff.n.adv  | suffix(nominal.adverbial)                |
+| 接尾辞-名詞的-助数詞     | Suff.n.count | suffix(nominal.counter)                  |
+| 接尾辞-形容詞的        |    Suff.ai   | suffix(adjective_i)                      |
+| 接尾辞-形状詞的        |   Suff.ana   | suffix(adjectival_noun)                  |
+| 接続詞             |     Conj     | conjunction                              |
+| 接頭辞             |     Pref     | prefix                                   |
+| 空白              |      Ws      | whitespace                               |
+| 補助記号-ＡＡ-一般      |  Supsym.aa.g | supplementary_symbol(ascii_art.general)  |
+| 補助記号-ＡＡ-顔文字     |  Supsym.aa.e | supplementary_symbol(ascii_art.emoticon) |
+| 補助記号-一般         |   Supsym.g   | supplementary_symbol(general)            |
+| 補助記号-句点         |   Supsym.p   | supplementary_symbol(period)             |
+| 補助記号-括弧閉        |   Supsym.bo  | supplementary_symbol(bracketopen)        |
+| 補助記号-括弧開        |   Supsym.bc  | supplementary_symbol(bracketclose)       |
+| 補助記号-読点         |   Supsym.c   | supplementary_symbol(comma)              |
+| 記号-一般           |     Sym.g    | symbol(general)                          |
+| 記号-文字           |    Sym.ch    | symbol(character)                        |
+| 連体詞             |      Adn     | adnominal                                |
+| 未知語             |    Unknown   | unknown_words                            |
+| カタカナ文           |   Katakana   | katakana                                 |
+| 漢文              |    Kanbun    | chinese_writing                          |
+| 言いよどみ           |  Hesitation  | hesitation                               |
+| web誤脱           |   ErrorOmit  | errors_omissions                         |
+| 方言              |    Dialect   | dialect                                  |
+| ローマ字文           |      Lat     | latin_alphabet                           |
+| 新規未知語           |  NewUnknown  | new_unknown_words                        |
